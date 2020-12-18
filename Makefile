@@ -68,7 +68,7 @@ check: $(TESTS_LOG)
 		if [ $$test_log = $(TESTS_LOG_FAILED) ]; then test_failed_cnt=$$((test_failed_cnt + 1)); fi; \
 	done; \
 	\
-	if [ $$test_failed_cnt = 0 ]; then echo -e "\nEverything is OK"; else echo -e "\nSome tests failed"; fi; \
+	if [ $$test_failed_cnt = 0 ]; then echo $$'\n'"Everything is OK"; else echo $$'\n'"Some tests failed"; fi; \
 	echo "$$((test_cnt - test_failed_cnt)) / $$test_cnt"; \
 	\
 	[ $$test_failed_cnt = 0 ]
