@@ -65,18 +65,18 @@ check: $(TESTS_LOG)
 		test_log="$$(cat $(TEST_DIR)/$$test.$(TESTS_LOG_EXT))"; \
 		\
 		echo "Test \"$$test\" - $$test_log"; \
-		if [ test_log = $(TESTS_LOG_FAILED) ]; then test_failed_cnt=$$((test_err_cnt + 1)); fi; \
+		if [ $$test_log = $(TESTS_LOG_FAILED) ]; then test_failed_cnt=$$((test_failed_cnt + 1)); fi; \
 	done; \
 	\
-	if [ test_err_cnt ]; then echo "Everything is OK"; else echo "Some tests failed"; fi; \
+	if [ $$test_failed_cnt = 0 ]; then echo -e "\nEverything is OK"; else echo -e "\nSome tests failed"; fi; \
 	echo "$$((test_cnt - test_failed_cnt)) / $$test_cnt"; \
 	\
-	if [ ! test_err_cnt ]; then exit 1; fi
+	[ $$test_failed_cnt = 0 ]
 
 $(TESTS_CHECK_CMDS): check_%: $(TEST_DIR)/%.$(TESTS_LOG_EXT)
 	test_log="$$(cat $<)"; \
 	echo "Test \"$*\" - $$test_log"; \
-	exit $$(( test_log = $(TESTS_LOG_OK) ))
+	[ $$test_log = $(TESTS_LOG_OK) ]
 
 $(TESTS_LOG): $(TEST_DIR)/%.$(TESTS_LOG_EXT): $(TEST_DIR)/%.$(TESTS_ACTUAL_EXT)
 	if cmp -s $(TEST_DIR)/$*.$(TESTS_OUT_EXT) $<; then \
@@ -93,3 +93,4 @@ $(TESTS_ACTUAL): $(TEST_DIR)/%.$(TESTS_ACTUAL_EXT): $(TEST_DIR)/%.$(TESTS_IN_EXT
 
 clean:
 	rm -rf $(BUILD_DIR) $(TESTS_LOG) $(TESTS_ACTUAL)
+
