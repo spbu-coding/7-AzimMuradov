@@ -68,8 +68,8 @@ check: $(TESTS_LOG)
 		if [ $$test_log = $(TESTS_LOG_FAILED) ]; then test_failed_cnt=$$((test_failed_cnt + 1)); fi; \
 	done; \
 	\
-	if [ $$test_failed_cnt = 0 ]; then echo $$'\n'"Everything is OK"; else echo $$'\n'"Some tests failed"; fi; \
-	echo "$$((test_cnt - test_failed_cnt)) / $$test_cnt"; \
+	if [ $$test_failed_cnt = 0 ]; then echo ""; echo "Everything is OK"; else echo ""; echo "Some tests failed"; fi; \
+	echo "Number of successful tests: $$((test_cnt - test_failed_cnt)) / $$test_cnt"; \
 	\
 	[ $$test_failed_cnt = 0 ]
 
