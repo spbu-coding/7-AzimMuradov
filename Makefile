@@ -42,11 +42,11 @@ all: $(EXEC)
 
 #-------------------------------------------------------- Build --------------------------------------------------------
 
-$(EXEC): $(OBJECTS) $(OBJECTS)
-	$(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(OBJECTS) -o $@
+$(EXEC): $(OBJECTS)
+	$(LD) $(LDFLAGS) $^ -o $@
 
 $(OBJECTS): $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c | $(BUILD_DIR)
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 -include $(DEPS)
 
